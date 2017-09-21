@@ -27,7 +27,7 @@ object HdfsWordCount {
  
     //StreamingExamples.setStreamingLogLevels()
     val sparkConf = new SparkConf().setAppName("HdfsWordCount")
-    sparkConf.set("fs.defaultFS", "hdfs://LOLZXX86.lol.de.remote.com:9000")
+    sparkConf.set("fs.defaultFS", "hdfs://localhost:9000")
     // Create the context
     val ssc = new StreamingContext(sparkConf, Seconds(2))
  

@@ -15,12 +15,12 @@ object App {
     println("Trying to write file in HDFS...")
     System.setProperty("HADOOP_USER_NAME", "hadoop");
     val conf = new Configuration()
-    conf.set("fs.defaultFS", "hdfs://LOLZXX86.lol.de.remote.com:9000")
+    conf.set("fs.defaultFS", "hdfs://localhost:9000")
     val fs = FileSystem.get(conf)
     val output = fs.create(new Path("/dummy_storage/tmp/mySample.txt"))
     val writer = new PrintWriter(output)
     try {
-      writer.write("this is a test")
+      writer.write("{\"name\":\"Yin\",\"address\":{\"city\":\"Columbus\",\"state\":\"Ohio\"}}")
       writer.write("\n")
     } finally {
       writer.close()
@@ -32,7 +32,7 @@ object App {
     val conf1 = new SparkConf().setMaster("local[*]").setAppName("dataset").set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
     val sc = new SparkContext(conf1)
 
-    val lines = sc.textFile("hdfs://LOLZXX86.lol.de.remote.com:9000/dummy_storage/tmp/mySample.txt")
+    val lines = sc.textFile("hdfs://localhost:9000/dummy_storage/tmp/mySample.txt")
 
   }
 

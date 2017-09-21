@@ -1,5 +1,8 @@
-package com.bosch.tt.icom.retriver.spark
-
+import org.apache.spark.SparkConf
+import org.apache.spark.streaming._
+import org.apache.spark.SparkContext
+import org.apache.spark.sql._
+import org.apache.spark.sql.functions._
 import org.apache.spark._
 import org.apache.spark.streaming._
 import org.apache.spark.storage.StorageLevel
@@ -21,13 +24,15 @@ object HDFSFileReader {
     System.setProperty("HADOOP_USER_NAME", "hadoop");
     println("Trying to read file from HDFS...")
     val conf = new SparkConf().setMaster("local[*]").setAppName("HDFSFileReader")
-    conf.set("fs.defaultFS", "hdfs://LOLZ1186.lol.de.bosch.com:9000")
+    conf.set("fs.defaultFS", "hdfs://localhost:9000")
     val sc = new SparkContext(conf)
-    val data = sc.textFile("hdfs://localhost:9000/dummy_storage/ImpalaTesdata/2017/9/18").toDF
-    data.saveAsTextFile("\\usr\\share\\spark")
     
-   
    val sqlContext = new org.apache.spark.sql.SQLContext(sc)
+      import sqlContext.implicits._
+    val data = sc.textFile("hdfs://localhost:9000/dummy_storage/ImpalaTesdata/2017/9/18").toDF
+    data.rdd.saveAsTextFile("\\usr\\share\\spark")
+    
+ 
     var gateway =sqlContext.jsonFile("hdfs://localhost:9000/dummy_storage/ImpalaTesdata/2017/9/18/111111252.json")
     gateway.show()
     gateway.printSchema()
