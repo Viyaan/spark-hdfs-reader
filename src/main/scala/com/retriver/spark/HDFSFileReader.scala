@@ -34,7 +34,7 @@ object HDFSFileReader {
     
  
     var gateway =sqlContext.jsonFile("hdfs://localhost:9000/dummy_storage/ImpalaTesdata/2017/9/18/111111252.json")
-    gateway.registerTempTable("people")
+    gateway.registerTempTable("gateway")
     gateway.show()
     gateway.printSchema()
     val b = sqlContext.sql("select * from gateway")
