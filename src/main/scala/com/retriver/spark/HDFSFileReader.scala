@@ -17,17 +17,12 @@ import sys.process.stringSeqToProcess
 import org.apache.spark.SparkConf
     /*
      * argument 0 - path of HDFS file or directory to read
-     * argument 1 - path where file is stored in destination
      */
  
 object HDFSFileReader extends App {
- 
-    println("Retrive data from HDFS...")
-    val conf = new org.apache.spark.SparkConf().setMaster("local[*]").setAppName("fdl-hdfs-reader")
-    conf.set("fs.defaultFS", "hdfs://localhost:9000")
-    val sqlContext = new org.apache.spark.sql.SQLContext(new org.apache.spark.SparkContext(conf))
-    var schema =sqlContext.read.json(args(0))
+    val conf = new org.apache.spark.SparkConf().setMaster("local[*]").setAppName("fdl-hdfs-reader").set("fs.defaultFS", "hdfs://localhost:9000")
+    var schema =new org.apache.spark.sql.SQLContext(new org.apache.spark.SparkContext(conf)).read.json(args(0))
     schema.show()
     schema.printSchema()
-    schema.rdd.saveAsTextFile(args(1))
+    schema.rdd.foreach(println)
 }

@@ -10,7 +10,6 @@ HDFSFileReader
 
 
 argument 0 - path of HDFS file or directory to read
-argument 1 - path where file is stored in destination
 
 
 
